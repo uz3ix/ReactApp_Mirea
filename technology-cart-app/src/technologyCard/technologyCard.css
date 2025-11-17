@@ -1,0 +1,45 @@
+.card-container{
+    background-color: rgb(173, 187, 106);   
+    padding: 1rem;
+}
+
+.task-list{
+    text-align: center;
+}
+
+/* Заголовок */
+.title-task-list{
+    font-size: 2rem;
+}
+
+/* Лист с задачами */
+.list{
+    text-decoration: none;
+    list-style: none;
+    padding: 0;
+}
+
+.list-item{
+    text-decoration: none;
+    padding: 1rem;
+    margin: 0 auto 0.5rem auto;
+    border: 0.1rem solid black;
+    background-color: beige;
+    border-radius: 0.5rem;
+    width: 20rem;    
+}
+
+.title-item{
+    font-size: 2rem;
+}
+
+/* вывод статуса */
+.completed {
+    color: green;
+}
+.in-progress{
+    color: rgb(212, 179, 14);
+}
+.not-started{
+    color:red;
+}
