@@ -1,29 +1,43 @@
 function checkStatus(status){
-    if (status == 'completed')
+    if (status === 'completed')
         return (
             <div className="status">
                 <p className="completed">Изучение завершено</p>
             </div>
         )
-    else if (status == 'in-progress')
+    else if (status === 'in-progress')
         return (
             <div className="status">
-                <p className="in-progress" >В процессе изучения</p>
+                <p className="in-progress">В процессе изучения</p>
             </div>
         )
     else
         return (
             <div className="status">
-                <p className="not-started" >Еще не начат</p>
+                <p className="not-started">Еще не начат</p>
             </div>
         )
 }
 
-function TechnologyCard({technologies}) {
-
+function TechnologyCard({ technologies, changeStatus , changeAllStatus}) {
     return (
         <div className="task-list">
             <span className="title-task-list">Список задач</span>
+            <div className="container-btn">
+                <button 
+                    className="btn-switch-to-ns" 
+                    onClick={() => changeAllStatus('not-started')}
+                >
+                    Сбросить все статусы
+                </button>
+                <button
+                    className="btn-switch-to-completed"
+                    onClick={() => changeAllStatus('completed')}
+                >
+                    Выполнить все
+                </button>
+            </div>
+
             <ul className="list">
                 {technologies.map(task => (
                     <li key={task.id} className={`list-item`}>
@@ -31,7 +45,12 @@ function TechnologyCard({technologies}) {
                         <br />
                         <span className="description-item">{task.description}</span>
                         {checkStatus(task.status)}
-                        
+                        <button 
+                            className="btn-change-status" 
+                            onClick={() => changeStatus(task.id)}
+                        >
+                            Изменить статус
+                        </button>
                     </li>
                 ))}
             </ul>
