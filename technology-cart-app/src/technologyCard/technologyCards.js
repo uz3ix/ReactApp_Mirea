@@ -2,7 +2,17 @@ import './technologyCard.css';
 import TechnologyCard from "./technologyCard";
 import ProgressHeader from "../ProgressHeader/ProgressHeader";
 
-function TechnologyCards({ technologies, allTechnologies, changeStatus, changeAllStatus, activeFilter, setActiveFilter}) {   
+function TechnologyCards({ 
+  technologies, 
+  allTechnologies, 
+  changeStatus, 
+  changeAllStatus, 
+  activeFilter, 
+  setActiveFilter, 
+  updateTechnologyNotes,
+  searchQuery, 
+  setSearchQuery
+}) {   
     const filterButtons = [
         { key: 'all', label: 'Все технологии', count: allTechnologies.length },
         { key: 'not-started', label: 'Не начатые', count: allTechnologies.filter(t => t.status === 'not-started').length },
@@ -10,12 +20,35 @@ function TechnologyCards({ technologies, allTechnologies, changeStatus, changeAl
         { key: 'completed', label: 'Выполненные', count: allTechnologies.filter(t => t.status === 'completed').length }
     ];
 
-
     return (
         <div className='main-page-container'>
             <div className='header'>
                 <ProgressHeader technologies={allTechnologies} />
             </div>
+            
+            {/* Блок поиска */}
+            <div className="search-box" style={{ 
+                textAlign: 'center', 
+                padding: '1rem', 
+                backgroundColor: '#f0f8ff' 
+            }}>
+                <input
+                    type="text"
+                    placeholder="Поиск технологий..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    style={{
+                        padding: '0.5rem',
+                        width: '300px',
+                        fontSize: '1rem',
+                        border: '1px solid #ccc',
+                        borderRadius: '4px',
+                        marginRight: '1rem'
+                    }}
+                />
+                <span>Найдено: {technologies.length}</span>
+            </div>
+
             <div className="filters-panel">
                 <h3 className='filter-title'>Фильтры:</h3>
                 <div className="filter-buttons">
@@ -39,6 +72,7 @@ function TechnologyCards({ technologies, allTechnologies, changeStatus, changeAl
                 technologies={technologies} 
                 changeStatus={changeStatus} 
                 changeAllStatus={changeAllStatus}
+                updateTechnologyNotes={updateTechnologyNotes}
                 />
             </div>
         </div>

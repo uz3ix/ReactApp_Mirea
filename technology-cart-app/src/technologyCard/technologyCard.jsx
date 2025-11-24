@@ -1,3 +1,5 @@
+import TechnologyNotes from "./TechnologyNotes";
+
 function checkStatus(status){
     if (status === 'completed')
         return (
@@ -19,7 +21,7 @@ function checkStatus(status){
         )
 }
 
-function TechnologyCard({ technologies, changeStatus , changeAllStatus}) {
+function TechnologyCard({ technologies, changeStatus , changeAllStatus, updateTechnologyNotes}) {
     return (
         <div className="task-list">
             <span className="title-task-list">Список задач</span>
@@ -51,6 +53,11 @@ function TechnologyCard({ technologies, changeStatus , changeAllStatus}) {
                         >
                             Изменить статус
                         </button>
+                        <TechnologyNotes
+                            notes={task.notes || ''}
+                            onNotesChange={updateTechnologyNotes}
+                            techId={task.id}
+                        />
                     </li>
                 ))}
             </ul>
