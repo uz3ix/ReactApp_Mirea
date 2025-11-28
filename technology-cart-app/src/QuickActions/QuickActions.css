@@ -1,0 +1,36 @@
+.quick-actions {
+  background: #fff;
+  border: 1px solid #eee;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.quick-actions h3 {
+  margin: 0 0 8px 0;
+  font-size: 1rem;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  background: #f7f7f7;
+}
+
+.btn.success { background:#e8f7ec; border-color:#c7ebcd; }
+.btn.warning { background:#fff8e6; border-color:#ffe6a8; }
+.btn.info { background:#eef7ff; border-color:#cfeaff; }
+
+.btn-primary {
+  background: #2b7cff;
+  color: #fff;
+  border: none;
+}

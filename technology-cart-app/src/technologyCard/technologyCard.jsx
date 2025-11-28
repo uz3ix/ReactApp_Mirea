@@ -1,68 +1,37 @@
-import TechnologyNotes from "./TechnologyNotes";
+import { useState } from 'react';
+import './TechnologyCard.css';
 
-function checkStatus(status){
-    if (status === 'completed')
-        return (
-            <div className="status">
-                <p className="completed">Изучение завершено</p>
-            </div>
-        )
-    else if (status === 'in-progress')
-        return (
-            <div className="status">
-                <p className="in-progress">В процессе изучения</p>
-            </div>
-        )
-    else
-        return (
-            <div className="status">
-                <p className="not-started">Еще не начат</p>
-            </div>
-        )
-}
+function TechnologyCard({ technology, onStatusChange, onNotesChange, onOpenModal }) {
+  const [localStatus, setLocalStatus] = useState(technology.status);
 
-function TechnologyCard({ technologies, changeStatus , changeAllStatus, updateTechnologyNotes}) {
-    return (
-        <div className="task-list">
-            <span className="title-task-list">Список задач</span>
-            <div className="container-btn">
-                <button 
-                    className="btn-switch-to-ns" 
-                    onClick={() => changeAllStatus('not-started')}
-                >
-                    Сбросить все статусы
-                </button>
-                <button
-                    className="btn-switch-to-completed"
-                    onClick={() => changeAllStatus('completed')}
-                >
-                    Выполнить все
-                </button>
-            </div>
+  const handleStatus = (e) => {
+    const newStatus = e.target.value;
+    setLocalStatus(newStatus);
+    onStatusChange(technology.id, newStatus);
+  };
 
-            <ul className="list">
-                {technologies.map(task => (
-                    <li key={task.id} className={`list-item`}>
-                        <span className="title-item">{task.title} </span>
-                        <br />
-                        <span className="description-item">{task.description}</span>
-                        {checkStatus(task.status)}
-                        <button 
-                            className="btn-change-status" 
-                            onClick={() => changeStatus(task.id)}
-                        >
-                            Изменить статус
-                        </button>
-                        <TechnologyNotes
-                            notes={task.notes || ''}
-                            onNotesChange={updateTechnologyNotes}
-                            techId={task.id}
-                        />
-                    </li>
-                ))}
-            </ul>
+  return (
+    <div className="tech-card">
+      <div className="tech-card-header">
+        <h3>{technology.title}</h3>
+        <span className={`tech-badge ${technology.status}`}>{technology.status}</span>
+      </div>
+
+      <p className="tech-desc">{technology.description}</p>
+
+      <div className="tech-controls">
+        <select value={localStatus} onChange={handleStatus}>
+          <option value="not-started">Не начато</option>
+          <option value="in-progress">В процессе</option>
+          <option value="completed">Выполнено</option>
+        </select>
+
+        <div className="tech-buttons">
+          <button onClick={() => onOpenModal(technology)} className="btn">Заметки</button>
         </div>
-    );
+      </div>
+    </div>
+  );
 }
 
 export default TechnologyCard;

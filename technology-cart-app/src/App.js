@@ -1,132 +1,76 @@
-import TechnologyCards from "./technologyCard/technologyCards";
-import { useState, useEffect } from "react";
+import React, { useState } from 'react';
+import useTechnologies from './useLocalStorage/useTechnologies';
+import ProgressBar from './ProgressBar/ProgressBar';
+import TechnologyCard from './TechnologyCard/TechnologyCard';
+import TechnologyModal from './TechnologyModal';
+import QuickActions from './QuickActions/QuickActions';
+import './App.css';
 
 function App() {
-    const [technologies, setTechnologies] = useState([]);
-    const [isLoaded, setIsLoaded] = useState(false);
+  const {
+    technologies,
+    updateStatus,
+    updateNotes,
+    markAllCompleted,
+    resetAll,
+    progress,
+  } = useTechnologies();
 
-    // Загружаем данные из localStorage только один раз при монтировании
-    useEffect(() => {
-      const saved = localStorage.getItem('techTrackerData');
-      if (saved) {
-        setTechnologies(JSON.parse(saved));
-        console.log('Данные загружены из localStorage');
-      } else {
-        setTechnologies([
-          { 
-            id: 1, 
-            title: 'React Components', 
-            description: 'Изучение базовых компонентов', 
-            status: 'not-started',
-            notes: ''
-          },
-          { 
-            id: 2, 
-            title: 'JSX Syntax', 
-            description: 'Освоение синтаксиса JSX', 
-            status: 'not-started',
-            notes: ''
-          },
-          {
-            id: 3,
-            title: 'Python',
-            description: 'Написание бэкенда',
-            status: 'completed',
-            notes: ''
-          }
-        ]);
-      }
-      setIsLoaded(true);
-    }, []);
+  const [activeTech, setActiveTech] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-    // Сохраняем технологии в localStorage при любом изменении
-    useEffect(() => {
-      if (isLoaded && technologies.length > 0) {
-        localStorage.setItem('techTrackerData', JSON.stringify(technologies));
-        console.log('Данные сохранены в localStorage:', technologies);
-      }
-    }, [technologies, isLoaded]);
+  const openModal = (tech) => {
+    setActiveTech(tech);
+    setIsModalOpen(true);
+  };
 
-    const updateTechnologyNotes = (techId, newNotes) => {
-      setTechnologies(prevTech => 
-        prevTech.map(tech => 
-          tech.id === techId ? { ...tech, notes: newNotes } : tech
-        )
-      );
-    };
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setActiveTech(null);
+  };
 
-    // изменение статусов
-    const changeStatus = (id) => {
-      setTechnologies(prevTechnologies => 
-        prevTechnologies.map(tech => {
-          if (tech.id === id) {
-            const statusOrder = ['not-started', 'in-progress', 'completed'];
-            const currentIndex = statusOrder.indexOf(tech.status);
-            const nextIndex = (currentIndex + 1) % statusOrder.length;
-            return {
-              ...tech,
-              status: statusOrder[nextIndex]
-            };
-          }
-          return tech;
-        })
-      );
-    }
+  return (
+    <div className="app">
+      <header className="app-header">
+        <h1>Трекер изучения технологий</h1>
+        <div style={{ maxWidth: 600, width: '100%' }}>
+          <ProgressBar progress={progress} label="Общий прогресс" color="#4CAF50" animated={true} height={18} />
+        </div>
+      </header>
 
-    const changeAllStatus = (newStatus) => {
-      setTechnologies(prevTechnologies =>
-        prevTechnologies.map(t => ({
-          ...t,
-          status: newStatus
-        }))
-      )
-    }
-
-    // фильтры по статусу
-    const [activeFilter, setFilter] = useState('all')
-
-    const filteredTechnologies = technologies.filter(tech => {
-      switch (activeFilter) {
-        case 'not-started':
-          return tech.status === 'not-started';
-        case 'in-progress':
-          return tech.status === 'in-progress';
-        case 'completed':
-          return tech.status === 'completed';
-        default:
-          return true; 
-      }
-    });
-
-    // поиск
-    const [searchQuery, setSearchQuery] = useState('')
-
-    // применяем оба фильтра: сначала по статусу, потом поиск
-    const filteredTechnologiesBySearch = filteredTechnologies.filter(tech => 
-      tech.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      tech.description.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-
-    // Пока данные загружаются, можно показать заглушку
-    if (!isLoaded) {
-      return <div>Загрузка...</div>;
-    }
-
-    return (
-      <div className="App">
-          <TechnologyCards 
-            technologies={filteredTechnologiesBySearch}
-            allTechnologies={technologies}
-            changeStatus={changeStatus}
-            changeAllStatus={changeAllStatus}
-            activeFilter={activeFilter}
-            setActiveFilter={setFilter}
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            updateTechnologyNotes={updateTechnologyNotes}
+      <main className="app-main">
+        <aside className="sidebar">
+          <QuickActions
+            onMarkAllCompleted={markAllCompleted}
+            onResetAll={resetAll}
+            technologies={technologies}
           />
-      </div>
-    );
+        </aside>
+
+        <section className="content">
+          <div className="technologies-grid">
+            {technologies.map(tech => (
+              <TechnologyCard
+                key={tech.id}
+                technology={tech}
+                onStatusChange={updateStatus}
+                onNotesChange={updateNotes}
+                onOpenModal={openModal}
+              />
+            ))}
+          </div>
+        </section>
+      </main>
+
+      <TechnologyModal
+        tech={activeTech}
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onSaveNotes={updateNotes}
+        onStatusChange={updateStatus}
+      />
+    </div>
+  );
 }
 
 export default App;
