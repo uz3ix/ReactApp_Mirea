@@ -1,75 +1,40 @@
-import React, { useState } from 'react';
-import useTechnologies from './useLocalStorage/useTechnologies';
-import ProgressBar from './ProgressBar/ProgressBar';
-import TechnologyCard from './TechnologyCard/TechnologyCard';
-import TechnologyModal from './TechnologyModal';
-import QuickActions from './QuickActions/QuickActions';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+import { TechProvider } from './context/TechContext';
+import Navigation from './components/Navigation';
+
+import Home from './pages/Home';
+import TechnologyList from './pages/TechnologyList';
+import TechnologyDetail from './pages/TechnologyDetail';
+import AddTechnology from './pages/AddTechnology';
+import Statistics from './pages/Statistics';
+import Settings from './pages/Settings';
+
 import './App.css';
+import './pages/TechnologyList.css';
+import './pages/Statistics.css';
 
 function App() {
-  const {
-    technologies,
-    updateStatus,
-    updateNotes,
-    markAllCompleted,
-    resetAll,
-    progress,
-  } = useTechnologies();
-
-  const [activeTech, setActiveTech] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const openModal = (tech) => {
-    setActiveTech(tech);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setActiveTech(null);
-  };
-
   return (
-    <div className="app">
-      <header className="app-header">
-        <h1>Трекер изучения технологий</h1>
-        <div style={{ maxWidth: 600, width: '100%' }}>
-          <ProgressBar progress={progress} label="Общий прогресс" color="#4CAF50" animated={true} height={18} />
+    <TechProvider>
+      <Router>
+        <div className="app">
+          <Navigation />
+          <main className="main-content">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/technologies" element={<TechnologyList />} />
+              <Route path="/technology/:techId" element={<TechnologyDetail />} />
+              <Route path="/add-technology" element={<AddTechnology />} />
+              <Route path="/statistics" element={<Statistics />} />
+              <Route path="/settings" element={<Settings />} />
+              {/* можно добавить 404 */}
+            </Routes>
+          </main>
         </div>
-      </header>
-
-      <main className="app-main">
-        <aside className="sidebar">
-          <QuickActions
-            onMarkAllCompleted={markAllCompleted}
-            onResetAll={resetAll}
-            technologies={technologies}
-          />
-        </aside>
-
-        <section className="content">
-          <div className="technologies-grid">
-            {technologies.map(tech => (
-              <TechnologyCard
-                key={tech.id}
-                technology={tech}
-                onStatusChange={updateStatus}
-                onNotesChange={updateNotes}
-                onOpenModal={openModal}
-              />
-            ))}
-          </div>
-        </section>
-      </main>
-
-      <TechnologyModal
-        tech={activeTech}
-        isOpen={isModalOpen}
-        onClose={closeModal}
-        onSaveNotes={updateNotes}
-        onStatusChange={updateStatus}
-      />
-    </div>
+      </Router>
+    </TechProvider>
   );
 }
 

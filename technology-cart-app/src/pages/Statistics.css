@@ -1,0 +1,25 @@
+.stat-section { margin-bottom:16px; }
+
+.bars { display:flex; flex-direction:column; gap:10px; max-width:720px; }
+
+.bar-row { display:flex; gap:10px; align-items:center; }
+
+.bar-label { min-width:120px; text-transform:capitalize; }
+
+.bar-track {
+  background:#f0f0f0;
+  flex:1;
+  height:14px;
+  border-radius:999px;
+  overflow:hidden;
+}
+
+.bar-fill { height:100%; border-radius:999px; }
+
+.bar-fill.not-started { background:#ffdca8; }
+.bar-fill.in-progress { background:#9ad8ff; }
+.bar-fill.completed { background:#b6f2b6; }
+
+.bar-pct { min-width:48px; text-align:right; font-weight:600; }
+.cat-list { display:flex; gap:10px; flex-wrap:wrap; }
+.cat-item { background:#fff; padding:8px 10px; border-radius:8px; border:1px solid #eee; }

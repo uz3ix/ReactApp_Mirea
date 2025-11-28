@@ -1,0 +1,35 @@
+.main-navigation {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:12px 16px;
+  background:#fff;
+  border-radius:8px;
+  border:1px solid #eee;
+  margin-bottom:14px;
+}
+
+.nav-brand h2 { margin:0; font-size:1.05rem; }
+
+.nav-menu {
+  list-style:none;
+  display:flex;
+  gap:12px;
+  margin:0;
+  padding:0;
+  align-items:center;
+}
+
+.nav-menu a {
+  text-decoration:none;
+  padding:8px 10px;
+  border-radius:6px;
+  color:#333;
+}
+
+.nav-menu a.active {
+  background:#eef7ff;
+  color:#0b63d6;
+  font-weight:600;
+}
