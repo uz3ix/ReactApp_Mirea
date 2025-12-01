@@ -1,0 +1,158 @@
+.data-import-export {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.data-import-export h2 {
+  margin-bottom: 24px;
+  color: #333;
+}
+
+.status-message {
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.status-message.success {
+  background: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #4caf50;
+}
+
+.status-message.error {
+  background: #ffebee;
+  color: #c62828;
+  border: 1px solid #f44336;
+}
+
+.export-section,
+.import-section {
+  margin-bottom: 32px;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.section-description {
+  color: #666;
+  margin-bottom: 16px;
+}
+
+.btn-export {
+  padding: 12px 24px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-export:hover:not(:disabled) {
+  background: #388e3c;
+}
+
+.btn-export:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.drop-zone {
+  border: 2px dashed #ddd;
+  border-radius: 8px;
+  padding: 40px 20px;
+  text-align: center;
+  margin-bottom: 16px;
+  transition: all 0.3s;
+}
+
+.drop-zone.dragging {
+  border-color: #2196f3;
+  background: #e3f2fd;
+}
+
+.drop-zone-content p {
+  margin-bottom: 16px;
+  color: #666;
+}
+
+.file-input {
+  display: none;
+}
+
+.btn-select-file {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #ff9800;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+
+.btn-select-file:hover {
+  background: #f57c00;
+}
+
+.import-help {
+  padding: 16px;
+  background: #f5f5f5;
+  border-radius: 4px;
+}
+
+.import-help h4 {
+  margin-bottom: 8px;
+  color: #555;
+}
+
+.import-help ul {
+  margin: 0;
+  padding-left: 20px;
+  color: #666;
+}
+
+.import-help li {
+  margin-bottom: 4px;
+}
+
+.stats-section {
+  padding: 20px;
+  background: #e3f2fd;
+  border-radius: 8px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.stat-card {
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.stat-value {
+  display: block;
+  font-size: 32px;
+  font-weight: bold;
+  color: #2196f3;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  display: block;
+  font-size: 14px;
+  color: #666;
+}

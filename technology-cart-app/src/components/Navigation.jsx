@@ -1,32 +1,16 @@
-import { Link, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import './Navigation.css';
 
 export default function Navigation() {
-  const location = useLocation();
-
   return (
-    <nav className="main-navigation">
-      <div className="nav-brand">
-        <Link to="/"><h2>🚀 Трекер технологий</h2></Link>
-      </div>
-
-      <ul className="nav-menu">
-        <li>
-          <Link to="/" className={location.pathname === '/' ? 'active' : ''}>Главная</Link>
-        </li>
-        <li>
-          <Link to="/technologies" className={location.pathname.startsWith('/technologies') ? 'active' : ''}>Все технологии</Link>
-        </li>
-        <li>
-          <Link to="/add-technology" className={location.pathname === '/add-technology' ? 'active' : ''}>Добавить</Link>
-        </li>
-        <li>
-          <Link to="/statistics" className={location.pathname === '/statistics' ? 'active' : ''}>Статистика</Link>
-        </li>
-        <li>
-          <Link to="/settings" className={location.pathname === '/settings' ? 'active' : ''}>Настройки</Link>
-        </li>
-      </ul>
+    <nav className="navigation">
+      <NavLink to="/" end>Главная</NavLink>
+      <NavLink to="/technologies">Технологии</NavLink>
+      <NavLink to="/add">Добавить</NavLink>
+      <NavLink to="/statistics">Статистика</NavLink>
+      <NavLink to="/import-export">Импорт/Экспорт</NavLink>
+      <NavLink to="/demo-form">Демо-форма</NavLink>
+      <NavLink to="/settings">Настройки</NavLink>
     </nav>
   );
 }
