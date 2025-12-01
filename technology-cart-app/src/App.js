@@ -1,41 +1,34 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useState } from "react";
+import { Routes, Route } from "react-router-dom";
+import Navigation from "./components/Navigation";
+import Home from "./pages/Home";
+import TechnologyList from "./pages/TechnologyList";
+import TechnologyDetail from "./pages/TechnologyDetail";
+import AddTechnology from "./pages/AddTechnology";
 
-import { TechProvider } from './context/TechContext';
-import Navigation from './components/Navigation';
+import RoadmapImporter from "./components/RoadmapImporter";
+import TechSearch from "./components/TechSearch";
+import { TechContext } from "./context/TechContext";
 
-import Home from './pages/Home';
-import TechnologyList from './pages/TechnologyList';
-import TechnologyDetail from './pages/TechnologyDetail';
-import AddTechnology from './pages/AddTechnology';
-import Statistics from './pages/Statistics';
-import Settings from './pages/Settings';
+export default function App() {
+  const [search, setSearch] = useState("");
 
-import './App.css';
-import './pages/TechnologyList.css';
-import './pages/Statistics.css';
-
-function App() {
   return (
-    <TechProvider>
-      <Router>
-        <div className="app">
-          <Navigation />
-          <main className="main-content">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/technologies" element={<TechnologyList />} />
-              <Route path="/technology/:techId" element={<TechnologyDetail />} />
-              <Route path="/add-technology" element={<AddTechnology />} />
-              <Route path="/statistics" element={<Statistics />} />
-              <Route path="/settings" element={<Settings />} />
-              {/* можно добавить 404 */}
-            </Routes>
-          </main>
-        </div>
-      </Router>
-    </TechProvider>
+    <>
+      <Navigation />
+
+      <div style={{ padding: 20 }}>
+        <RoadmapImporter />
+
+        <TechSearch onSearch={setSearch} />
+
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/technologies" element={<TechnologyList search={search} />} />
+          <Route path="/tech/:techId" element={<TechnologyDetail />} />
+          <Route path="/add" element={<AddTechnology />} />
+        </Routes>
+      </div>
+    </>
   );
 }
-
-export default App;
